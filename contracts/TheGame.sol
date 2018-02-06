@@ -49,7 +49,7 @@ contract TheGame {
 
     function set_question_answer(string quest, bytes32 ans_hash) public {
         if (game_state == state.AWAIT_QUESTION &&
-            msg.sender != proposer) {
+            msg.sender == proposer) {
                 question = quest;
                 answer_hash = ans_hash;
                 question_timestamp = block.timestamp;
