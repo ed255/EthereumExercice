@@ -2,13 +2,13 @@
 ### An Ethereum Smart Contract quizz game
 
 #HSLIDE
-## Idea
+### Idea
 
 Make a decentralized game where a player proposes a problem as a question and
 the rest of the players try to guess the answer, with fees and prizes.
 
 #HSLIDE
-## Challenges
+### Challenges
 
 * Forbid cheating
 * Incentivize users to play
@@ -16,7 +16,7 @@ the rest of the players try to guess the answer, with fees and prizes.
 * Achieve liveness (the game continues even if a player stops participating)
 
 #HSLIDE
-## Setup
+### Setup
 
 1. Wait for N users to join the game (by paying a fee F)
 2. Select one player at random that will submit a question and hash(answer)
@@ -25,13 +25,13 @@ the rest of the players try to guess the answer, with fees and prizes.
 5. Clear data and go to 1
 
 #HSLIDE
-## Details
+### Details
 
-### Timeouts
+#### Timeouts
 
 The contract implements a state machine that records the timestamp after every transition.  If a state exceeds a specified timeout, any user can call a timeout function to reset the game.
 
-### Incentivizing proposer
+#### Incentivizing proposer
 
 The choosen proposer has payed a fee but won't be guessing, so they may lose interest!  Reward them with a prize for good questions: low reward for questions answered quickly, high reward for answers that take more time.
 
@@ -47,3 +47,21 @@ Make the system such that this attacker loses money on average by following this
 
 E(earnings) = - fees spent + E(prize) < 0
 $$-mF + \frac{m}{N}*\left[(1-p)(kF) + p((N-k)F\frac{1}{p}\right] < 0$$
+
+#HSLIDE
+#### Show me the code
+```
+function join_game() public {
+    if (game_state == state.AWAIT_PLAYERS &&
+        msg.value >= F) {
+        player_list.push(msg.sender);
+        players[msg.sender] = true;
+
+        if (player_list.length == N) {
+            proposer = player_list[rnd(N)];
+            game_timestamp = block.timestamp;
+            game_state = state.AWAIT_QUESTION;
+        }
+    }
+}
+```
