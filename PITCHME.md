@@ -2,13 +2,13 @@
 ### An Ethereum Smart Contract quizz game
 
 #HSLIDE
-# Idea
+## Idea
 
 Make a decentralized game where a player proposes a problem as a question and
 the rest of the players try to guess the answer, with fees and prizes.
 
 #HSLIDE
-# Challenges
+## Challenges
 
 * Forbid cheating
 * Incentivize users to play
@@ -16,7 +16,7 @@ the rest of the players try to guess the answer, with fees and prizes.
 * Achieve liveness (the game continues even if a player stops participating)
 
 #HSLIDE
-# Setup
+## Setup
 
 1. Wait for N users to join the game (by paying a fee F)
 2. Select one player at random that will submit a question and hash(answer)
@@ -25,7 +25,7 @@ the rest of the players try to guess the answer, with fees and prizes.
 5. Clear data and go to 1
 
 #HSLIDE
-# Details
+## Details
 
 ### Timeouts
 
@@ -36,7 +36,7 @@ The contract implements a state machine that records the timestamp after every t
 The choosen proposer has payed a fee but won't be guessing, so they may lose interest!  Reward them with a prize for good questions: low reward for questions answered quickly, high reward for answers that take more time.
 
 #HSLIDE
-# Attacks?
+## Attacks?
 
 An attacker could register more than one player so that they are the question
 proposer, then choose a question with a random answer which only they know.
