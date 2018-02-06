@@ -1,22 +1,21 @@
 # The Game
 ### An Ethereum Smart Contract quizz game
 
-#VSLIDE
-
+#HSLIDE
 # Idea
 
 Make a decentralized game where a player proposes a problem as a question and
 the rest of the players try to guess the answer, with fees and prizes.
 
-### Challenges
+#HSLIDE
+# Challenges
 
 * Forbid cheating
 * Incentivize users to play
 * Incentivize the proposer submit a good problem (not too easy, not impossible)
 * Achieve liveness (the game continues even if a player stops participating)
 
-#VSLIDE
-
+#HSLIDE
 # Setup
 
 1. Wait for N users to join the game (by paying a fee F)
@@ -25,6 +24,7 @@ the rest of the players try to guess the answer, with fees and prizes.
 4. Winner gets a fraction of this round fees or the pot (contract valance) with a small probability
 5. Clear data and go to 1
 
+#HSLIDE
 # Details
 
 ### Timeouts
@@ -35,6 +35,7 @@ The contract implements a state machine that records the timestamp after every t
 
 The choosen proposer has payed a fee but won't be guessing, so they may lose interest!  Reward them with a prize for good questions: low reward for questions answered quickly, high reward for answers that take more time.
 
+#HSLIDE
 # Attacks?
 
 An attacker could register more than one player so that they are the question
@@ -45,4 +46,4 @@ proposer, then choose a question with a random answer which only they know.
 Make the system such that this attacker loses money on average by following this strategy:
 
 E(earnings) = E(prize) - fees spent < 0
-$$-m * F + \frac{m}{N}*\left[\right]$$
+$$-mF + \frac{m}{N}*\left[(1-p)(kF) + p((N-k)F\frac{1}{p}\right]$$
