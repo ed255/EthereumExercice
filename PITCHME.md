@@ -45,5 +45,5 @@ proposer, then choose a question with a random answer which only they know.
 
 Make the system such that this attacker loses money on average by following this strategy:
 
-E(earnings) = E(prize) - fees spent < 0
-$$-mF + \frac{m}{N}*\left[(1-p)(kF) + p((N-k)F\frac{1}{p}\right]$$
+E(earnings) = - fees spent + E(prize) < 0
+$$-mF + \frac{m}{N}*\left[(1-p)(kF) + p((N-k)F\frac{1}{p}\right] < 0$$
