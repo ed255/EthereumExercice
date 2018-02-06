@@ -65,3 +65,39 @@ function join_game() public {
     }
 }
 ```
+
+#HSLIDE
+#### Show me the code
+```
+function set_question_answer(string quest, bytes32 ans_hash) public {
+    if (game_state == state.AWAIT_QUESTION &&
+        msg.sender != proposer) {
+            question = quest;
+            answer_hash = ans_hash;
+            question_timestamp = block.timestamp;
+        }
+}
+```
+
+#HSLIDE
+#### Show me the code
+```
+function guess_answer(string answer) public {
+    if (game_state == state.AWAIT_ANSWER &&
+        players[msg.sender] == true &&
+        msg.sender != proposer) {
+        if (sha256(answer) == answer_hash) {
+            uint256 prize;
+            uint256 prop_prize = proposer_prize(block.timestamp - question_timestamp);
+            if (rnd(128) == 42) {
+                prize = this.balance - prop_prize;    
+            } else {
+                prize = K * F;
+            }
+            msg.sender.transfer(prize);
+            proposer.transfer(prop_prize);
+            restart_game();
+        }
+    }
+}
+```
