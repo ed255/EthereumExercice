@@ -53,7 +53,7 @@ contract TheGame {
                 question = quest;
                 answer_hash = ans_hash;
                 question_timestamp = block.timestamp;
-                game_state = stat.AWAIT_ANSWER;
+                game_state = state.AWAIT_ANSWER;
             }
     }
 
