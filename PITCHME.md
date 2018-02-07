@@ -27,10 +27,10 @@ the rest of the players try to guess the answer, with fees and prizes.
 #HSLIDE
 ### Details
 
-*Timeouts*: 
+**Timeouts**: 
 The contract implements a state machine that records the timestamp after every transition.  If a state exceeds a specified timeout, any user can call a timeout function to reset the game.
 
-*Incentivizing proposer*: 
+**Incentivizing proposer**: 
 
 The choosen proposer has payed a fee but won't be guessing, so they may lose interest!  Reward them with a prize for good questions: low reward for questions answered quickly, high reward for answers that take more time.
 
@@ -40,7 +40,7 @@ The choosen proposer has payed a fee but won't be guessing, so they may lose int
 An attacker could register more than one player so that they are the question
 proposer, then choose a question with a random answer which only they know.
 
-*Solution*:
+**Solution**:
 Make the system such that this attacker loses money on average by following this strategy:
 
 E(earnings) = - fees spent + E(prize) < 0
