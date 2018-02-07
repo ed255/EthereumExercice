@@ -53,6 +53,7 @@ contract TheGame {
                 question = quest;
                 answer_hash = ans_hash;
                 question_timestamp = block.timestamp;
+                game_state = stat.AWAIT_ANSWER;
             }
     }
 
@@ -87,7 +88,8 @@ contract TheGame {
                 }
                 msg.sender.transfer(prize);
                 proposer.transfer(prop_prize);
-                restart_game();
+                clear_game();
+                game_state = state.AWAIT_PLAYERS;
             }
         }
     }
@@ -99,7 +101,7 @@ contract TheGame {
         }
     }
 
-    function restart_game() private {
+    function clear_game() private {
         for (uint i = 0; i < player_list.length; i++) {
             delete players[player_list[i]];
         }
@@ -109,8 +111,6 @@ contract TheGame {
         delete question;
         delete answer_hash;
         delete question_timestamp;
-
-        game_state = state.AWAIT_PLAYERS;
     }
 
 }

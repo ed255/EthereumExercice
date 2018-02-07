@@ -75,6 +75,7 @@ function set_question_answer(string quest, bytes32 ans_hash) public {
             question = quest;
             answer_hash = ans_hash;
             question_timestamp = block.timestamp;
+            game_state = stat.AWAIT_ANSWER;
         }
 }
 ```
@@ -96,7 +97,8 @@ function guess_answer(string answer) public {
             }
             msg.sender.transfer(prize);
             proposer.transfer(prop_prize);
-            restart_game();
+            clear_game();
+            game_state = state.AWAIT_PLAYERS;
         }
     }
 }
