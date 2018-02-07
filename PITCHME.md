@@ -31,7 +31,6 @@ the rest of the players try to guess the answer, with fees and prizes.
 The contract implements a state machine that records the timestamp after every transition.  If a state exceeds a specified timeout, any user can call a timeout function to reset the game.
 
 **Incentivizing proposer**: 
-
 The choosen proposer has payed a fee but won't be guessing, so they may lose interest!  Reward them with a prize for good questions: low reward for questions answered quickly, high reward for answers that take more time.
 
 #HSLIDE
