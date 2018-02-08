@@ -48,7 +48,7 @@ $$-mF + \frac{m}{N}\left[(1-p)(kF) + p((N-k)F\frac{1}{p}\right] < 0$$
 #HSLIDE
 #### Show me the code
 ```
-function join_game() public {
+function join_game() public payable {
     if (game_state == state.AWAIT_PLAYERS &&
         msg.value >= F) {
         player_list.push(msg.sender);

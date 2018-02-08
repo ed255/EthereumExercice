@@ -1,7 +1,36 @@
 pragma solidity ^0.4.15;
 
+/* Test
+
+$ ganache-cli -a 4
+
+var accounts;
+web3.eth.getAccounts(function(err,res) { accounts = res; });
+
+var tg = TheGame.at(TheGame.address)
+tg.get_state()
+tg.join_game({from: accounts[0], value: web3.toWei(4, 'finney')})
+tg.join_game({from: accounts[1], value: web3.toWei(4, 'finney')})
+tg.join_game({from: accounts[2], value: web3.toWei(4, 'finney')})
+tg.join_game({from: accounts[3], value: web3.toWei(4, 'finney')})
+
+tg.get_state()
+tg.get_player_list()
+
+tg.get_proposer()
+
+tg.set_question_answer("What did the computer eat on the moon?", web3.sha3("space bars"), {from: tg.get_proposer()})
+
+tg.get_state()
+tg.guess_answer("space bars", {from: accounts[0]})
+
+tg.get_state()
+
+*/
+
 contract TheGame {
-    uint constant N = 128; 
+    //uint constant N = 128; 
+    uint constant N = 4; 
     uint constant K = N/2;
     uint constant Q = N/4;
     uint256 constant F = 4 finney;
@@ -13,7 +42,7 @@ contract TheGame {
 
     enum state {AWAIT_PLAYERS, AWAIT_QUESTION, AWAIT_ANSWER}
 
-    state game_state;
+    state public game_state = state.AWAIT_PLAYERS;
     address[] public player_list;
     mapping (address => bool) public players;
     uint public game_timestamp;
@@ -23,11 +52,31 @@ contract TheGame {
     bytes32 public answer_hash;
     uint public question_timestamp;
 
+    function get_player_list() public view returns (address[]) {
+        return player_list;
+    }
+
+    function get_state() public view returns (state) {
+        return game_state;
+    }
+
+    function get_proposer() public view returns (address) {
+        return proposer;
+    }
+
+    function get_question() public view returns (string) {
+        return question;
+    }
+
+    function get_pot() public view returns (uint256) {
+        return this.balance;
+    }
+
     function rnd(uint n) private view returns (uint) {
         return uint(block.blockhash(block.number-1)) % n;
     }
 
-    function join_game() public {
+    function join_game() public payable {
         if (game_state == state.AWAIT_PLAYERS &&
             msg.value >= F) {
             player_list.push(msg.sender);
@@ -78,7 +127,7 @@ contract TheGame {
         if (game_state == state.AWAIT_ANSWER &&
             players[msg.sender] == true &&
             msg.sender != proposer) {
-            if (sha256(answer) == answer_hash) {
+            if (sha3(answer) == answer_hash) {
                 uint256 prize;
                 uint256 prop_prize = proposer_prize(block.timestamp - question_timestamp);
                 if (rnd(128) == 42) {
@@ -112,5 +161,4 @@ contract TheGame {
         delete answer_hash;
         delete question_timestamp;
     }
-
 }
